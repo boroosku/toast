@@ -1,21 +1,12 @@
 package com.boroosku.toast
 
 import javafx.animation.FadeTransition
-import javafx.animation.Interpolator
-import javafx.animation.KeyFrame
-import javafx.animation.KeyValue
-import javafx.animation.Timeline
 import javafx.application.Application
 import javafx.application.Platform
-import javafx.beans.property.DoubleProperty
-import javafx.beans.property.SimpleDoubleProperty
-import javafx.beans.value.ObservableValue
 import javafx.event.EventHandler
-import javafx.geometry.Insets
 import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.control.OverrunStyle
 import javafx.scene.image.Image
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
@@ -30,8 +21,6 @@ import javafx.stage.StageStyle
 import javafx.util.Duration
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
-import javafx.scene.text.TextAlignment
-import java.io.File
 import kotlin.system.exitProcess
 
 enum class ImageStyle {
@@ -64,7 +53,7 @@ class Toast {
         }
 
         fun setMessage(str: String): Builder {
-            config.message = str;
+            config.message = str
             return this
         }
 
@@ -74,7 +63,7 @@ class Toast {
         }
 
         fun build(): Toast  {
-            var toast = Toast()
+            val toast = Toast()
             toast.config = config
             toast.build()
 
@@ -96,14 +85,14 @@ class Toast {
         message.isWrapText = true
         appName.isWrapText = true
 
-        var btnClose = Button("Закрыть")
+        val btnClose = Button("Закрыть")
         btnClose.style = "-fx-background-color: red"
         btnClose.onAction = EventHandler {
             windows.close()
         }
         root.children.add(btnClose)
 
-        var btnUpperRight = Button("Правый верхний угол")
+        val btnUpperRight = Button("Правый верхний угол")
         btnUpperRight.style = "-fx-background-color: burlywood"
         btnUpperRight.onAction = EventHandler {
             windows.y = 0.0
@@ -111,7 +100,7 @@ class Toast {
         }
         root.children.add(btnUpperRight)
 
-        var btnUpperLeft = Button("Левый верхний угол")
+        val btnUpperLeft = Button("Левый верхний угол")
         btnUpperLeft.style = "-fx-background-color: burlywood"
         btnUpperLeft.onAction = EventHandler {
             windows.y = 0.0
@@ -119,7 +108,7 @@ class Toast {
         }
         root.children.add(btnUpperLeft)
 
-        var btnLowerLeft = Button("Левый нижний угол")
+        val btnLowerLeft = Button("Левый нижний угол")
         btnLowerLeft.style = "-fx-background-color: burlywood"
         btnLowerLeft.onAction = EventHandler {
             windows.y = Screen.getPrimary().bounds.maxY - height - 40.0
@@ -127,7 +116,7 @@ class Toast {
         }
         root.children.add(btnLowerLeft)
 
-        var btnLowerRight = Button("Левый правый угол")
+        val btnLowerRight = Button("Левый правый угол")
         btnLowerRight.style = "-fx-background-color: burlywood"
         btnLowerRight.onAction = EventHandler {
             windows.x = Screen.getPrimary().bounds.maxX - width
@@ -135,7 +124,7 @@ class Toast {
         }
         root.children.add(btnLowerRight)
 
-        var btnChangeImageType = Button("Изменить форму изображения!")
+        val btnChangeImageType = Button("Изменить форму изображения!")
         btnChangeImageType.style = "-fx-background-color: burlywood; -fx-font-weight:bold"
         btnChangeImageType.onAction = EventHandler {
             if (config.imageType == ImageStyle.RECTANGLE) {
@@ -180,7 +169,7 @@ class Toast {
         else {
             Circle(75.0, 75.0, 75.0)
         }
-        iconBorder.setFill(ImagePattern(Image(config.image)))
+        iconBorder.fill = ImagePattern(Image(config.image))
         box.children.add(0, iconBorder)
     }
 
@@ -198,14 +187,14 @@ class Toast {
         anim.cycleCount = 1
         anim.onFinished = EventHandler {
             Platform.exit()
-            System.exit(0)
+            exitProcess(0)
         }
         anim.play()
     }
 
     fun start() {
         windows.show()
-        openAnimation();
+        openAnimation()
         val thread = Thread {
             try {
                 Thread.sleep(config.openTime.toLong())
@@ -227,11 +216,11 @@ private fun music(){
 class SomeClass: Application() {
     override fun start(p0: Stage?) {
         music()
-        var toast = Toast.Builder()
-                .setTitle("Задание выполнено:")
-                .setMessage("Сделать первую лабу")
-                .setAppName("Ваши отношения с Daniil Glushchenko улучшаются с 0 до 1")
-                .build()
+        val toast = Toast.Builder()
+            .setTitle("Задание выполнено:")
+            .setMessage("Сделать первую лабу")
+            .setAppName("Ваши отношения с Daniil Glushchenko улучшаются с 0 до 1")
+            .build()
         toast.start()
     }
     companion object {
